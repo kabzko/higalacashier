@@ -1,0 +1,22 @@
+.passcode {
+    width: 40px;
+    height: 40px;
+}
+.passcode-btn {
+    height: 80px;
+    width: 80px;
+    font-size: 20px;
+    margin: 5px;
+}
+.passcode {
+    border: 1px solid #d3d3d3;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px 0 5px;
+    &.active {
+        background: #d3d3d3;
+    }
+}
+.passcode-btn {
+    --border-radius: 50%;
+}

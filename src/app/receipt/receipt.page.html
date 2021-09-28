@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="popOut()">
+        Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Reciept Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="printToBluetooth()">
+        Print
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="Receipt?.length != 0" class="ion-padding div-receipt">
+    <div class="zig-zag-bottom zig-zag-top">
+      <ion-item style="padding-bottom: 20px;">
+        <div style="font-size: 20px;"><b>SI ID. </b><span class="ion-text-uppercase">{{ OrderID }}</span></div>
+        <div style="color: gray; position: absolute; right: 0;">{{ OrderDate }}</div>
+      </ion-item>
+      <ion-item lines="none" *ngFor="let receipt of Receipt" style="padding-bottom: 20px;">
+        <div style="width: 15%; ">{{ receipt.quantity }}×</div>
+        <div style="width: 65%; margin-left: 20px;"><b><span>{{ receipt.name }}</span></b><br>
+          <span *ngIf="receipt.discounts == 0" style="color: gray; font-size: 14px;">₱ {{ formatPrice(receipt.price) }}</span>
+          <span *ngIf="receipt.discounts != 0" style="color: var(--ion-color-danger); font-size: 14px;"><del>₱ {{ formatPrice(receipt.price) }}</del></span>&nbsp;
+          <span *ngIf="receipt.discounts != 0" style="color: gray; font-size: 14px;">₱ {{ formatPrice(receipt.price - (receipt.price * receipt.discounts)) }}</span>
+        </div>
+        <div *ngIf="receipt.discounts == 0" class="ion-text-right" style="width: 20%;">₱ {{ formatPrice(receipt.total) }}</div>
+        <div *ngIf="receipt.discounts != 0" class="ion-text-right" style="width: 20%;">₱ {{ formatPrice((receipt.price - (receipt.price * receipt.discounts)) * receipt.quantity) }}</div>
+      </ion-item>
+      <ion-item style="border-top: 1px solid rgb(220, 220, 220)">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Subtotal</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Total) }}</div>
+      </ion-item>
+      <ion-item *ngIf="BenefitsPercentage != 0">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Benefits Discounts(<span style="color: var(--ion-color-danger);">{{ BenefitsPercentage }}%</span>)</b></div>
+        <div class="ion-text-right" style="width: 50%; color: var(--ion-color-danger);">₱ {{ formatPrice(Benefits) }}</div>
+      </ion-item>
+      <ion-item *ngIf="BenefitsPercentage == 0">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Benefits Discounts({{ BenefitsPercentage }}%)</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Benefits) }}</div>
+      </ion-item>
+      <ion-item *ngIf="BenefitsPercentage != 0">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Total</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Total - Benefits) }}</div>
+      </ion-item>
+      <ion-item *ngIf="BenefitsPercentage == 0">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Total</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Total) }}</div>
+      </ion-item>
+      <ion-item>
+        <div *ngIf="Type == 'cash'" class="ion-text-uppercase" style="width: 50%;"><b>Cash</b></div>
+        <div *ngIf="Type == 'storecredit'" class="ion-text-uppercase" style="width: 50%;"><b>Store Credit</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Cash) }}</div>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Change</b></div>
+        <div class="ion-text-right" style="width: 50%;"> ₱ {{ formatPrice(Change) }}</div>
+      </ion-item>
+      <ion-item>
+        
+      </ion-item>
+      <ion-item>
+        <div class="ion-text-uppercase" style="width: 50%;"><b>VATable Sales</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Vatable) }}</div>
+      </ion-item>
+      <ion-item *ngIf="VatPercentage != 0">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>VAT Amount(<span style="color: var(--ion-color-danger);">{{ VatPercentage }}%</span>)</b></div>
+        <div class="ion-text-right" style="width: 50%; color: var(--ion-color-danger);">₱ {{ formatPrice(Vatamount) }}</div>
+      </ion-item>
+      <ion-item *ngIf="VatPercentage == 0">
+        <div class="ion-text-uppercase" style="width: 50%;"><b>VAT Amount({{ VatPercentage }}%)</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(Vatamount) }}</div>
+      </ion-item>
+      <ion-item>
+        <div class="ion-text-uppercase" style="width: 50%;"><b>VAT Exempt Sales</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(0) }}</div>
+      </ion-item>
+      <ion-item>
+        <div class="ion-text-uppercase" style="width: 50%;"><b>Zero Rated Sales</b></div>
+        <div class="ion-text-right" style="width: 50%;">₱ {{ formatPrice(0) }}</div>
+      </ion-item>
+      <ion-item lines="none">
+        <div style="width: 50%">
+          <b>CASHIER:</b> {{ firstCapLet(AssignUser) }}
+        </div>
+        <div *ngIf="ReceiptCustomerName != '' && ReceiptCustomerName != null" class="ion-text-right" style="width: 50%">
+          <b>CUSTOMER: </b> 
+          <span>{{ firstCapLet(ReceiptCustomerName) }}</span>
+        </div>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

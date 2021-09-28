@@ -1,0 +1,25 @@
+{
+    "appId": "io.ionic.starter",
+    "appName": "HigalaPOS",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "www",
+    "plugins": {
+      "SplashScreen": {
+        "launchShowDuration": 0
+      }
+    },
+    "cordova": {
+      "preferences": {
+        "ScrollEnabled": "false",
+        "BackupWebStorage": "none",
+        "SplashMaintainAspectRatio": "true",
+        "SplashShowOnlyFirstTime": "false",
+        "SplashScreen": "screen",
+        "ShowSplashScreenSpinner": "false",
+        "orientation": "landscape",
+        "AndroidPersistentFileLocation": "Compatibility",
+        "AndroidExtraFilesystems": "files,cache, sdcard, cache-external, files-external"
+      }
+    }
+}

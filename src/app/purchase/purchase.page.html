@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        Menu
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Receipt Purchases</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refreshReceipt()">
+        Refresh
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-list lines="full">
+      <ion-item>
+        <ion-searchbar [(ngModel)]="Search" (ionChange)="searchPurchase()" placeholder="Search Sales Invoice Number..."></ion-searchbar>
+      </ion-item>
+      <div *ngIf="Searching == 'false'">
+        <div *ngFor="let receiptdate of GroupReceipt; let i = index">
+          <ion-item detail="false" button (click)="expandItem(receiptdate.id)">
+            <div style="margin-left: 10px; font-size: 20px;">
+              <b *ngIf="i == 0 && receiptdate.date == DateToday">Today</b>
+              <b *ngIf="i == 0 && receiptdate.date != DateToday">{{ receiptdate.date }}</b>
+              <b *ngIf="i != 0">{{ receiptdate.date }}</b>
+            </div>
+          </ion-item>
+          <div [hidden]="receiptdate.expanded">
+            <ion-item detail="false" class="receipt-list" button (click)="viewReceipt(receipt.orderId)" *ngFor="let receipt of filterReceiptByDate(receiptdate.date)">
+              <div style="width: 50%;">
+                <span style="font-size: 18px; color: var(--ion-color-danger);"><b>₱ {{ formatPrice(receipt.total) }}</b></span><br>
+                <span style="color: gray; font-size: 14px;">{{ receipt.time }}</span>
+              </div>
+              <div class="ion-text-right ion-text-uppercase" style="width: 50%;">
+                <span style="font-size: 18px; color: var(--ion-color-danger);"><b>{{ receipt.type.toUpperCase() }}</b></span><br>
+                <span style="font-size: 14px;">SI ID. </span><span style="font-size: 14px;"><b>{{ receipt.orderId }}</b></span>
+              </div>
+            </ion-item>
+            <ion-item lines="none" color="primary" *ngIf="filterMoreButton(receiptdate.date) == true" detail="false" button (click)="moreFilterReceiptByDate(receiptdate.date)">
+              <ion-label class="ion-text-center">
+                <b>SHOW MORE</b>
+              </ion-label>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="Searching == 'true'">
+        <ion-item detail="false" class="search-receipt" button *ngFor="let receipt of Receipt" (click)="viewReceipt(receipt.orderId)">
+          <div style="width: 50%;">
+            <span style="font-size: 18px; color: var(--ion-color-danger);"><b>₱ {{ formatPrice(receipt.total) }}</b></span><br>
+            <span style="color: gray; font-size: 14px;">{{ receipt.date + " " + receipt.time }}</span>
+          </div>
+          <div class="ion-text-right ion-text-uppercase" style="width: 50%;">
+            <br>
+            <span style="font-size: 14px;">SI No. </span><span style="font-size: 14px;"><b>{{ receipt.orderId }}</b></span>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="Receipt?.length == 0" lines="none" class="ion-text-center">
+          <ion-label>The receipt number you're looking for is not found...</ion-label>
+        </ion-item> 
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

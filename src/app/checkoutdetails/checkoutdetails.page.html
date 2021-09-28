@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="popOut()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment color="primary" (ionChange)="selectStatus($event)" scrollable [value]="SegmentStatus" style="border-radius: 0 !important;">
+    <ion-segment-button id="segment1" value="Cash">
+      <ion-label style="font-size: 2.2vh;">Cash</ion-label>
+    </ion-segment-button>
+    <ion-segment-button id="segment2" value="Store Credit">
+      <ion-label style="font-size: 2.2vh;">Store Credit</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="SegmentStatus == 'Cash'">
+    <div class="field-container">
+      <label for="email">Customer Name</label>
+      <ion-input id="email" type="text"  (ionBlur)="checkBlur()" (ionFocus)="checkFocus()" (ionChange)="selectSimilarCustomer()" [(ngModel)]="CustomerName"></ion-input>
+      <div style="background-color: white; z-index: 999999; margin-top: 1px; border-bottom: 1px solid lightgrey; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; position: absolute; height: 200px; width: calc(100% - 20px); overflow-y: auto;" [hidden]="HiddenCustomer">
+        <ion-item style="--padding-start: 10px !important; --inner-padding-end: 10px !important;" button lines="none" detail="false" *ngFor="let customer of CustomerNameList" (click)="selectSuppleName(customer.customerName)">
+          {{ firstCapLet(customer.customerName) }}
+        </ion-item>
+      </div>
+    </div>
+    <div class="field-container">
+      <label for="email">Customer Bill</label>
+      <ion-input id="email" type="number" [(ngModel)]="CustomerCash" #inputCash></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Discount Benefits(Like Senior Citizen & etc.)</label>
+      <ion-input id="email" type="text" [(ngModel)]="CustomerBenefits"></ion-input>
+    </div>
+  </div>
+  <div *ngIf="SegmentStatus == 'Store Credit'">
+    <div class="field-container">
+      <label for="email">Customer Name</label>
+      <ion-input id="email" type="text"  (ionBlur)="checkBlur()" (ionFocus)="checkFocus()" (ionChange)="selectSimilarCustomer()" [(ngModel)]="CustomerName"></ion-input>
+      <div style="background-color: white; z-index: 999999; margin-top: 1px; border-bottom: 1px solid lightgrey; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; position: absolute; height: 200px; width: calc(100% - 20px); overflow-y: auto;" [hidden]="HiddenCustomer">
+        <ion-item style="--padding-start: 10px !important; --inner-padding-end: 10px !important;" button lines="none" detail="false" *ngFor="let customer of CustomerNameList" (click)="selectSuppleName(customer.customerName)">
+          {{ firstCapLet(customer.customerName) }}
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div style="margin: 10px 10px">
+    <ion-button *ngIf="SegmentStatus == 'Cash'" class="checkout-btn" expand="block" (click)="checkOut()">Checkout Now</ion-button>
+    <ion-button *ngIf="SegmentStatus == 'Store Credit'" class="checkout-btn" expand="block" (click)="storecredit()">Checkout Now</ion-button>
+  </div>
+</ion-footer>

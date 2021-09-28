@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="popOut()">
+        Back
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Security Pin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-input id="passtext" (ionChange)="keyboardInput($event)" hidden></ion-input>
+  <div id="security-div">
+    <div class="ion-text-center password-buttons">
+      <div class="username ion-text-center" style="margin-bottom: 20px;">
+        <span style="font-size: 28px;"><b>{{ firstCapLet(Name) }}</b></span><br>
+      </div>
+      <div class="ion-text-center" style="margin-bottom: 20px;">
+        <div id="step1" class="passcode"></div>
+        <div id="step2" class="passcode"></div>
+        <div id="step3" class="passcode"></div>
+        <div id="step4" class="passcode"></div>
+      </div>
+      <ion-button class="passcode-btn" (click)="numberClick(1)">1</ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(2)">2</ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(3)">3</ion-button>
+      <br>
+      <ion-button class="passcode-btn" (click)="numberClick(4)">4</ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(5)">5</ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(6)">6</ion-button>
+      <br>
+      <ion-button class="passcode-btn" (click)="numberClick(7)">7</ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(8)">8</ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(9)">9</ion-button>
+      <br>
+      <ion-button class="passcode-btn" (click)="eraseCode()">
+        <ion-icon slot="icon-only" name="backspace"></ion-icon>
+      </ion-button>
+      <ion-button class="passcode-btn" (click)="numberClick(0)">0</ion-button>
+      <ion-button class="passcode-btn" (click)="logInProfile()">
+        <ion-icon slot="icon-only" name="enter-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

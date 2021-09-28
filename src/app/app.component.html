@@ -1,0 +1,44 @@
+<ion-app>
+  <div class="spinner" [hidden]="Hidden">
+  </div>
+  <ion-menu side="start" swipeGesture="false" content-id="main-content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <div class="profile-menu">
+          <ion-label>
+            <span style="font-size: 22px;">Hi, {{ firstCapLet(sessionService.ProfileName) }}</span>
+          </ion-label>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="full">
+        <ion-item button detail="false" (click)="gotoPage('dashboard')">
+          <div class="ion-text-center" style="width: 10%; margin-left: 5px; margin-right: 15px;">
+            <fa-icon [icon]="['fas', 'home']" slot="start"></fa-icon>
+          </div>
+          <div style="font-size: 18px;">
+            Home
+          </div>
+        </ion-item>
+        <ion-item button detail="false" (click)="gotoPage('purchase')">
+          <div class="ion-text-center" style="width: 10%; margin-left: 5px; margin-right: 15px;">
+            <fa-icon [icon]="['fas', 'receipt']" slot="start"></fa-icon>
+          </div>
+          <div style="font-size: 18px;">
+            Receipt Purchases
+          </div>
+        </ion-item>
+        <ion-item button detail="false" (click)="endShift()">
+          <div class="ion-text-center" style="width: 10%; margin-left: 5px; margin-right: 15px;">
+            <fa-icon [icon]="['fas', 'sign-out-alt']" slot="start"></fa-icon>
+          </div>
+          <div style="font-size: 18px;">
+            End Shift
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-app>

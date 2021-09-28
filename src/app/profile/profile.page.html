@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">Cashier Profiles</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="loadProfiles()">
+        Refresh
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-item detail="false" button (click)="selectProfile(profiles.id, profiles.name)" *ngFor="let profiles of Profiles;">
+      <div class="ion-text-center" style="width: 4.5%;">
+        <fa-icon style="color: var(--ion-color-primary);" [icon]="['fas', 'cash-register']"></fa-icon>
+      </div>
+      <div style="width: 95.5%;"> 
+        <span style="font-size: 18px;">{{ firstCapLet(profiles.name) }}</span>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>

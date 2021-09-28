@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="popOut()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <div class="field-container">
+      <label for="email">Store Name</label>
+      <ion-input id="email" type="text" [(ngModel)]="StoreName"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Address</label>
+      <ion-input id="email" type="text" [(ngModel)]="StoreAddress"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Contact Number</label>
+      <ion-input id="email" type="number" step="any" [(ngModel)]="StoreContact"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Fax</label>
+      <ion-input id="email" type="text" [(ngModel)]="StoreFax"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Vat Reg Tin</label>
+      <ion-input id="email" type="text" [(ngModel)]="StoreVat"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Receipt PTU No</label>
+      <ion-input id="email" type="text" [(ngModel)]="ReceiptPTUNo"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Receipt PTU Date Issued</label>
+      <ion-input id="email" type="text" [(ngModel)]="ReceiptPTUDateIssued"></ion-input>
+    </div>
+    <div class="field-container">
+      <label for="email">Store Recepit PTU Valid Until</label>
+      <ion-input id="email" type="text" [(ngModel)]="ReceiptPTUValidUntil"></ion-input>
+    </div>
+    <div style="margin: 10px 10px">
+      <ion-button expand="block" (click)="printAlertRadio()">Proceed to Print</ion-button>
+    </div>
+  </div>
+</ion-content>

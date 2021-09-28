@@ -1,0 +1,22 @@
+{
+  "name": "HigalaPOS",
+  "version": "1.0.0",
+  "description": "Point of Sale",
+  "main": "index.js",
+  "scripts": {
+    "electron:start": "electron ./"
+  },
+  "dependencies": {
+    "@capacitor/electron": "^2.4.2",
+    "electron-is-dev": "^1.1.0"
+  },
+  "devDependencies": {
+    "electron": "^8.0.0"
+  },
+  "keywords": [
+    "capacitor",
+    "electron"
+  ],
+  "author": "",
+  "license": "ISC"
+}

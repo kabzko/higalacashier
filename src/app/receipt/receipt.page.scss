@@ -1,0 +1,49 @@
+ion-content {
+    --background: #0f52ba;
+}
+.div-receipt {
+    width: 652px;
+    margin: auto;
+}
+ion-item {
+    div:first-child {
+        margin-left: 15px;
+    }
+    div:last-child {
+        margin-right: 15px;
+    }
+}
+.zig-zag-top:before{
+    background:linear-gradient(45deg, transparent 33.333%, #fff 33.333%, #fff 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #fff 33.333%, #fff 66.667%, transparent 66.667%);
+    background-size:20px 40px;
+    content: " ";
+    display: block;
+    height: 40px;
+    width: 620px;
+    position: relative;
+    bottom: 10px;
+    left:0;
+    transform:rotate(0deg);
+}
+.zig-zag-bottom {
+    background: #fff;
+}
+.zig-zag-top {
+    background: #fff;
+}
+.zig-zag-bottom,
+.zig-zag-top {
+    margin: 32px 0;
+}
+.zig-zag-bottom:after {
+    background:linear-gradient(45deg, transparent 33.333%, #fff 33.333%, #fff 66.667%, transparent 66.667%), linear-gradient(-45deg, transparent 33.333%, #fff 33.333%, #fff 66.667%, transparent 66.667%);
+    background-size:20px 40px;
+    content: "";
+    display: block;
+    width: 620px;
+    height: 40px;
+    position: relative;
+    top: 10px;
+    left: 0px;
+    transform: rotate(180deg);
+}

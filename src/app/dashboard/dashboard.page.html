@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        Menu
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-input id="inputtext" [(ngModel)]="Barcode" (ionChange)="addToCart()" hidden></ion-input>
+  <ion-input id="inputtextaction" (ionChange)="actionKey($event)" hidden></ion-input>
+  <div class="big-pos">
+    <ion-row>
+      <ion-col size="6" style="border-right: 1px solid rgb(220, 220, 220);">
+        <ion-item>
+          <ion-searchbar (ionBlur)="checkBlur()" (ionFocus)="checkFocus()" [(ngModel)]="Search" (ionChange)="searchProduct()" placeholder="Search Barcode or Name..."></ion-searchbar>
+        </ion-item>
+        <ion-content id="product-list">
+          <ion-row>
+            <ion-col *ngFor="let inventory of Inventory" size-md="6" size-lg="6" size-xl="6" style="width: 100%;">
+              <div style="border: 1px solid rgb(220, 220, 220); margin: 3px; padding: 5px">
+                <div class="search-list" style="height: 150px;">
+                  <div style="font-size: 18px;">
+                    {{ inventory.barcode }}
+                  </div>
+                  <div style="font-size: 18px;">
+                    <b>{{ inventory.name + " " + inventory.netweight }}</b>
+                  </div>
+                  <div style="font-size: 18px;">
+                    <span style="color: var(--ion-color-danger)" *ngIf="inventory.discount == 0">₱ {{ formatPrice(inventory.price) }}</span>
+                    <span style="color: var(--ion-color-danger)" *ngIf="inventory.discount != 0">₱ {{ formatPrice(inventory.price - (inventory.price * inventory.discount)) }}<br></span>
+                    <small *ngIf="inventory.discount != 0"><del>₱ {{ formatPrice(inventory.price) }}</del></small>
+                  </div>   
+                  <div style="font-size: 18px;">
+                    <span>Stocks: {{ inventory.quantity }}</span>
+                  </div>
+                </div>
+                <div>
+                  <ion-button expand="block" (click)="bigaddToCart(inventory.id, inventory.quantity)">Add to Cart</ion-button>
+                </div>       
+              </div>
+            </ion-col>
+            <ion-col class="ion-text-center" *ngIf="Inventory?.length == 0 && Search != ''">
+              <ion-item lines="none" class="ion-text-center">
+                <ion-label>The product you're looking for is not found...</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="InfiniteScroll == true">
+            <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="Loading more data...">
+            </ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        </ion-content>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item class="head-list">
+          <div class="ion-text-left" style="font-size: 18px; color: red;">TOTAL AMOUNT</div>
+          <div class="ion-text-right" style="font-size: 18px; color: red;">₱ {{ formatPrice(Total.toFixed(2)) }}</div>
+        </ion-item>
+        <div id="cart-list" style="overflow-y: auto;">
+          <ion-item detail="false" style="border-left: 1px solid rgb(220, 220, 220);" class="checkout-list" button *ngFor="let cart of Cart; let i = index" (click)="actionSheet(i, cart.barcode, cart.id, cart.ordered, cart.price)">
+            <div>
+              {{ cart.ordered }}×
+            </div>
+            <div>
+              {{ cart.barcode }}
+            </div>
+            <div class="ion-text-uppercase">
+              <span><b>{{ cart.name }}</b></span><br>
+              <small *ngIf="cart.discount == 0" style="color: var(--ion-color-danger);">₱ {{ formatPrice(cart.price) }}</small>
+              <span *ngIf="cart.discount != 0">
+                <small style="color: var(--ion-color-danger);">₱ {{ formatPrice(cart.price - (cart.price * cart.discount)) }}</small>&nbsp;
+                <small style="color: gray;"><del>₱ {{ formatPrice(cart.price) }}</del></small>
+              </span>
+            </div>
+            <div>
+              <span *ngIf="cart.discount == 0"><b>₱ {{ formatPrice(cart.price * cart.ordered) }}</b></span>
+              <span *ngIf="cart.discount != 0"><b>₱ {{ formatPrice((cart.price - (cart.price * cart.discount)) * cart.ordered) }}</b></span>
+            </div>
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="clearAll()">
+      DEL - CLEAR
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" style="right: 190px !important;">
+    <ion-fab-button (click)="gotoCheckout()">
+      F9 - CHECKOUT
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

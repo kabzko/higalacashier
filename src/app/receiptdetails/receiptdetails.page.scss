@@ -1,0 +1,15 @@
+ion-input {
+    margin-top: 3px;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 3px;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    --padding-start: 0px;
+}
+.field-container {
+    margin: 0 15px;
+    padding: 10px 0px;
+    label {
+        font-size: 16px;
+    }
+}
